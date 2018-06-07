@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <!-- parent标签声明继承的父项目信息 -->
+  <parent>
+    <groupId>iss</groupId>
+    <artifactId>maven-multi-module</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <!-- groupId可以继承，也可以覆盖，通常不需要覆盖 -->
+  <groupId>iss</groupId>
+  <!-- 不可继承，子项目坐标的关键属性 -->
+  <artifactId>core</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>core</name>
+  <url>http://maven.apache.org</url>
+
+
+  <!--scope import解决了多继承的问题
+  <dependencyManagement>
+    <dependencies>
+      此处继承了a 和 b 两个项目，type为pom，scope 为 import
+      <dependency>
+        <groupId>com.cbm.stu</groupId>
+        <artifactId>maven-parent-a</artifactId>
+        <version>1.0.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cbm.stu</groupId>
+        <artifactId>maven-parent-b</artifactId>
+        <version>1.0.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+-->
+
+
+  <!-- 父项目中dependencies标签声明的依赖被直接继承，例如mybatis包 -->
+  <dependencies>
+    <!-- 继承自父项目的依赖，只需指明groupId和artifactId -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <!-- 继承自父项目的插件依赖，此处省略也可继承 -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

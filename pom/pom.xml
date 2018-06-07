@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.aty.mybatis</groupId>
+    <artifactId>mybatis-demo</artifactId>
+    <packaging>jar</packaging>
+    <version>${project.release.version}</version>
+    <name>mybatis-demo</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.release.version>0.1-SNAPSHOT</project.release.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <project.release.version>0.1</project.release.version>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <!--定义snapshots库和releases库的nexus地址-->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>
+                http://172.17.103.59:8081/nexus/content/repositories/releases/
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>
+                http://172.17.103.59:8081/nexus/content/repositories/snapshots/
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+    <!--首先我们看到pom文件中version的定义是采用占位符的形式，这样的好处是可以根据不同的profile来替换版本信息，比如maven默认是使用0.1-SNAPSHOT作为该模块的版本。
+
+  首先我们看到pom文件中version的定义是采用占位符的形式，这样的好处是可以根据不同的profile来替换版本信息，比如maven默认是使用0.1-SNAPSHOT作为该模块的版本。
+
+1、如果在发布时使用mvn deploy -P release 的命令，那么会自动使用0.1作为发布版本，那么根据maven处理snapshot和release的规则，由于版本号后不带-SNAPSHOT故当成是正式发布版本，会被发布到release仓库；
+
+2、如果发布时使用mvn deploy命令，那么就会使用默认的版本号0.1-SNAPSHOT，此时maven会认为是快照版本，会自动发布到快照版本库。
+
+
+
+ 在distributionManagement段中配置的是snapshot快照库和release发布库的地址，我这里是采用nexus作为镜像服务器。对于版本库主要是id和url的配置，配置完成后就可以通过mvn deploy进行发布了，当然了，如果你的镜像服务器需要用户名和密码，那么还需要在maven的settings.xml文件中做如下配置：
+
+[html] view plain copy
+<server>
+  <id>nexus-releases</id>
+  <username>admin</username>
+  <password>admin123</password>
+</server>
+
+<server>
+  <id>nexus-snapshots</id>
+  <username>admin</username>
+  <password>admin123</password>
+</server>
+  注意这里配置的server的id必须和pom文件中的distributionManagement对应仓库的id保持一致，maven在处理发布时会根据id查找用户名称和密码进行登录和文件的上传发布
+
+
+
+    -->
+
+</project>
